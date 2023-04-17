@@ -15,10 +15,10 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav ">
-        <div @click="loginmodal = false"  class="drop_btn bg-white ">
+        <div class="drop_btn bg-white">
           <a>로그인</a>
         </div>
-        <div @click="loginmodal = false" class="drop_btn bg-white">
+        <div class="drop_btn bg-white">
           <a>회원가입</a>
         </div>
         </div>
@@ -26,32 +26,89 @@
     </div>
   </nav>
 
-    <div class="login start" :class="{ end : loginmodal }">
-      <Login/>
+  <!--  아이디 비번 html 전체 영역을 지정하는 container -->
+  <div class="login hidden" id="container">
+    <!--  login 폼 영역을 : loginBox -->
+    <div id="loginBox">
+      <!-- 로그인 페이지 타이틀 -->
+      <div id="loginBoxTitle">CodeZone Login</div>
+      <!-- 아이디, 비번, 버튼 박스 -->
+      <div id="inputBox">
+        <div class="input-form-box"><span>아이디 </span><input type="text" name="uid" class="form-control"></div>
+        <div class="input-form-box"><span>비밀번호 </span><input type="password" name="upw" class="form-control"></div>
+          <button type="button" class="btn btn-primary btn-xs" style= "width: 300px; height : 80px; padding: 5px;">로그인</button>
+      </div>
     </div>
-
+  </div>
+  <input @input="title = $event.target.value">
+  <input @input="content = $event.target.value">
+  <button @click="create">글 작성</button>
+  <!-- <div v-for="(data,i) in datas.slice().reverse()" :key="i">
+    <p>{{ datas[i].title }} </p>
+    <p>{{ datas[i].content }} </p>
+  </div> -->
   
   <!--button-->
   <div class="content">
-    <button class="btn btn-warning" style="margin-left: 10vw; margin-right:10vw; margin-bottom:0.5vh;" >1:1 채팅</button>
-    <button class="btn btn-warning" style="margin-left: 60vw; margin-bottom:0.5vh;">커뮤니티</button>
+    <button class="btn btn-warning" style="margin-left: 10vw; margin-right:10vw; margin-top:10vh;" >1:1 채팅</button>
+    <button class="btn btn-warning" style="margin-left: 60vw; margin-top:10vh;">커뮤니티</button>
   </div>
 </template>
 
 <script>
-import Login from "./components/Login.vue"
+import axios from 'axios'
+let title = '';
+let content = '';
 export default {
   name: "App",
   data () {
     return {
-      loginmodal : true,  
+      datas : [], 
     }
   },
   components: {
-    Login : Login
   },
+  mounted(){
+    axios.get('http://127.0.0.1:8000/apitest/')
+    .then((result) =>{
+      console.log(result.data)
+      this.datas = result.data;
+    }
+    ).catch(()=>
+    console.log('실패'))
+
+    // login_btn 클래스를 가진 요소를 찾아서 click 이벤트에 함수 등록
+    $(".drop_btn").on("click", function() {
+      $(".login").removeClass("hidden");
+      $(".content").addClass("hidden");
+    });
+  },
+
+  methods : {
+    create(){
+    axios.post('http://127.0.0.1:8000/apitest/', {title:this.title,content:this.content})
+    .then((result) =>{
+      console.log('성공')
+      this.datas.push(result.data);
+    }
+    ).catch(()=>
+    console.log('실패'))
+    },
+  },
+  // mounted() {
+  //     // login_btn 클래스를 가진 요소를 찾아서 click 이벤트에 함수 등록
+  //     $(".drop_btn").on("click", function() {
+  //       $(".login").removeClass("hidden");
+  //       $(".content").addClass("hidden");
+  //     });
+  // }
 };
+
+
+
+
 </script>
+
 
 <style>
 #app {
@@ -64,7 +121,18 @@ export default {
 .content {
   width: 100vw;
   height: 40vh;
-  position : absolute;
+  display : inline-flex;
+  justify-content : space-between;
+  align-items: center;
+}
+
+.content button {
+  display: flex;
+  align-items: center;
+}
+
+.item {
+	flex-basis: auto;
 }
 
 .btn {
@@ -77,27 +145,32 @@ export default {
   font-size:2.5vw;
   white-space : nowrap;
   box-sizing: border-box;
-  
+}
+
+.content button a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .login {
   margin: auto;
   border-radius: 15px;
-  background: grey;
+  background: #712cf9;
   width: 300px;
-  height: 300px;
+  height: 200px;
   border-radius: 5px;
-}
-.start {
-  transform: translateY(0px);
-}
-.end {
-  transition: all 1s;
-  transform: translateY(-500px);
+  opacity: 0.9;
 }
 
 .drop_btn{
   border: solid 1px;
   border-radius: 6px;
 }
+
+.hidden {
+  display : none;
+}
+
 </style>
