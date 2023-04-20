@@ -31,7 +31,7 @@
     <!--  login 폼 영역을 : loginBox -->
     <div id="loginBox">
       <!-- 로그인 페이지 타이틀 -->
-      <div id="loginBoxTitle" style="font-size: 30px;">@로그인@</div>
+      <div id="loginBoxTitle" style="font-size: 30px;">-로그인-</div>
       <!-- 아이디, 비번, 버튼 박스 -->
       <div id="inputBox">
         <div class="input-form-box"><span>아이디 </span><input type="text" name="uid" class="form-control"></div>
