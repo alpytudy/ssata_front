@@ -16,7 +16,7 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav ">
         <div class="drop_btn bg-white">
-          <a>로그인</a>
+          <a @click="modalLogin = true">로그인</a>
         </div>
         <div class="drop_btn bg-white">
           <a>회원가입</a>
@@ -27,16 +27,19 @@
   </nav>
 
   <!--  아이디 비번 html 전체 영역을 지정하는 container -->
-  <div class="login hidden" id="container">
+  <div class="login" id="container" v-if="modalLogin == true">
     <!--  login 폼 영역을 : loginBox -->
     <div id="loginBox">
       <!-- 로그인 페이지 타이틀 -->
-      <div id="loginBoxTitle">CodeZone Login</div>
+      <div id="loginBoxTitle" style="font-size: 30px;">@로그인@</div>
       <!-- 아이디, 비번, 버튼 박스 -->
       <div id="inputBox">
         <div class="input-form-box"><span>아이디 </span><input type="text" name="uid" class="form-control"></div>
         <div class="input-form-box"><span>비밀번호 </span><input type="password" name="upw" class="form-control"></div>
-          <button type="button" class="btn btn-primary btn-xs" style= "width: 300px; height : 80px; padding: 5px;">로그인</button>
+        <div class="input-form-box">
+          <button class="btn-login" type="submit">로그인</button>
+          <button class="btn-login" type="button" @click="modalLogin=false">닫기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -49,9 +52,9 @@
   </div> -->
   
   <!--button-->
-  <div class="content">
-    <button class="btn btn-warning" style="margin-left: 10vw; margin-right:10vw; margin-top:10vh;" >1:1 채팅</button>
-    <button class="btn btn-warning" style="margin-left: 60vw; margin-top:10vh;">커뮤니티</button>
+  <div class="content" v-if="modalLogin==false">
+    <button class="btn-select btn-warning" style="margin-left: 10vw; margin-right:10vw; margin-top:10vh;" >1:1 채팅</button>
+    <button class="btn-select btn-warning" style="margin-left: 60vw; margin-top:10vh;">커뮤니티</button>
   </div>
 </template>
 
@@ -64,6 +67,8 @@ export default {
   data () {
     return {
       datas : [], 
+      modalLogin : false,
+
     }
   },
   components: {
@@ -104,9 +109,6 @@ export default {
   // }
 };
 
-
-
-
 </script>
 
 
@@ -135,7 +137,7 @@ export default {
 	flex-basis: auto;
 }
 
-.btn {
+.btn-select {
   padding: 10vw;
   width: 30vw;
   height: 25vh;
@@ -145,6 +147,21 @@ export default {
   font-size:2.5vw;
   white-space : nowrap;
   box-sizing: border-box;
+  border-color : yellow;
+  border-width: thin;
+  border-radius: 15px;
+}
+
+.btn-login{
+  margin-top:10px;
+  display: inline-block;
+  width:50%;
+  height:100%;
+  background-color: #712cf9;
+  color: white;
+  border-radius: 15px;
+  border-width: medium;
+  border-color : yellow;
 }
 
 .content button a {
@@ -156,10 +173,12 @@ export default {
 
 .login {
   margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
   border-radius: 15px;
   background: #712cf9;
   width: 300px;
-  height: 200px;
+  height: 230px;
   border-radius: 5px;
   opacity: 0.9;
 }
@@ -167,10 +186,6 @@ export default {
 .drop_btn{
   border: solid 1px;
   border-radius: 6px;
-}
-
-.hidden {
-  display : none;
 }
 
 </style>
