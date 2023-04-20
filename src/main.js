@@ -1,14 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-// import axios from "axios";
-
-// let url = "http://localhost:8000/"  장고주소
- 
-// axios.get(url)
-// .then(function(response){
-//   console.log(response);
-// })
-// .catch(function(response){
-//   console.log(response);
-// })
-createApp(App).mount('#app')
+import route from './router.js'
+import mitt from 'mitt'
+let emitter = mitt();
+let app = createApp(App)
+app.config.globalProperties.emitter = emitter;
+app.use(route).mount('#app')
