@@ -1,5 +1,5 @@
 <template>
-<a class="button" @click="enter" style="margin-right:50px;">1:1 채팅</a>
+<a class="button" @click="enter" style="margin-right:100px;">1:1 채팅</a>
 <a class="button" href="./article">커뮤니티</a>
 </template>
 
@@ -46,7 +46,7 @@ body {
 	background: var(--clr-bg);
 	font-family: 'Dongle', sans-serif;
 	color: var(--clr-neon);
-	font-size: 1.5rem;
+	font-size: 2rem;
 }
 .mainbody,
 .mainbody::before,
@@ -56,7 +56,7 @@ body {
 
 
 .button {
-	font-size: 2em;
+	font-size: 3rem;
 
 	display: inline-block;
 	cursor: pointer;
